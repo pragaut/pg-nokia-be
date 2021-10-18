@@ -47,7 +47,7 @@ app.use('/api-tmc/images', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api-tmc/tmc/', (req, res, next) => {
   // send it to middleware
-// console.log("api req",req);
+console.log("api req complete");
   middleware.entry(req, res, next);
 });
 
