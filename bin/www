@@ -19,8 +19,8 @@ const httpsOptions = {
  * Get port from environment and store in Express.
  */
 
-var ssl_port = normalizePort(process.env.TMC_PORT_SSL || '3000');
-var port = normalizePort(process.env.TMC_PORT || '3001');
+var ssl_port = normalizePort(process.env.NOKIA_PORT_SSL || '3000');
+var port = normalizePort(process.env.NOKIA_PORT || '3001');
 
 app.set('port', port);
 

@@ -8,12 +8,12 @@ const logger = require('morgan');
 const cors = require('cors');
 const compression = require('compression');
 const fileHelper = require('./util/file.helper');
-const util = require('./util/');
+const util = require('./util');
 const middleware = require('./routes/middleware');
 
-const adminRouter = require('./routes/tmcadmin');
-const workingRouter = require('./routes/tmcWorking'); 
-const reportRouter = require('./routes/tmcReport'); 
+const adminRouter = require('./routes/nokiaAdmin');
+const workingRouter = require('./routes/nokiaWorking'); 
+const reportRouter = require('./routes/nokiaReport'); 
 
 const cronJob = require('./job');
 
@@ -38,28 +38,28 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api-tmc/images', express.static(path.join(__dirname, 'uploads')));
+app.use('/api-nokia/images', express.static(path.join(__dirname, 'uploads')));
 
 // app.post('/purchase', (req, res) => {
 //   /** just a test api to get the razor pay test data */
 //   res.json(req.body);
 // });
 
-app.use('/api-tmc/tmc/', (req, res, next) => {
+app.use('/api-nokia/nokia/', (req, res, next) => {
   // send it to middleware
 console.log("api req complete");
   middleware.entry(req, res, next);
 });
 
 console.log("middleware - ok");
-app.use('/api-tmc/tmc/tmcadmin/', adminRouter);
-app.use('/api-tmc/tmc/tmcAdmin/', adminRouter);
-app.use('/api-tmc/tmc/tmcWorking/', workingRouter);
-app.use('/api-tmc/tmc/tmcReport/', reportRouter);
+app.use('/api-nokia/nokia/nokiaadmin/', adminRouter);
+app.use('/api-nokia/nokia/nokiaAdmin/', adminRouter);
+app.use('/api-nokia/nokia/nokiaWorking/', workingRouter);
+app.use('/api-nokia/nokia/nokiaReport/', reportRouter);
 // initiliaze all routers here
 
 // path for upload images
-fileHelper.init(app, __dirname + '/uploads/', 'tmc');
+fileHelper.init(app, __dirname + '/uploads/', 'nokia');
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
