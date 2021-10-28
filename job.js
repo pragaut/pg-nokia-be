@@ -10,7 +10,7 @@
  const mysql = require('mysql2');
  //const razorPay = require('./util/razor.pay.wrapper');
  //const logger = require('./util/logger');
- const util = require('./util/');
+ const util = require('./util');
  const cronJob = require('node-cron');
  
  //util.initApp();
