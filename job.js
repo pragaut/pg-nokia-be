@@ -54,26 +54,7 @@
  
  
  //-----------------Final Audit Auto Submission Job----------------------------
- cronJob.schedule('*/30 * * * *', () => {
-   //updateFinalAuditExecution()
-   try {
-     console.log("Task is running every 30 minute : ", new Date())
-     console.log("updateFinalAuditExecution");
- 
-     connection.query("CALL asp_HRA_AuditPlanDetails_Update_FinalAuditExecutionDetails", (error, results, fields) => {
-       if (error) {
-         console.error(error.message);
-       }
-       else if (results) {
-         console.log(results[0]);
-       }
-     });
- 
-   }
-   catch (error) {
-     console.log("error : ", error);
-   }
- });
+  
  //-----------------------End------------------------------------------------
  
  
