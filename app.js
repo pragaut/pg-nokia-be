@@ -47,8 +47,10 @@ app.use('/api-nokia/images', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api-nokia/nokia/', (req, res, next) => {
   // send it to middleware
-console.log("api req complete");
+  console.log("api req complete");
+
   middleware.entry(req, res, next);
+  
 });
 
 console.log("middleware - ok");
