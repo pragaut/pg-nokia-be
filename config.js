@@ -139,7 +139,8 @@ const requiredFields = {
 	register: ['firstName', 'lastName', 'email', 'password'],
 	event: ['name', 'url', 'buyInAmount', 'scheduledStart'],
 	login: ['email', 'password'],
-	login_social: ['email', 'token']
+	login_social: ['email', 'token'],
+	towerMonitoringUserDetails:['receiverId','employeeId','roleId']
 };
 
 /**
