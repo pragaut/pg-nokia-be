@@ -87,6 +87,10 @@ cronJob.schedule('*/03 * * * *', () => {
   }
 });
 
+cronJob.schedule('01 01 * * *', () => {
+  console.log("Task is running 3:27 :", new Date());
+  updateTMCEndDateTime(); 
+});
 
 const internetNotConnectedAlarm = async (notificationDetails) => {
   //
@@ -105,14 +109,14 @@ const internetNotConnectedAlarm = async (notificationDetails) => {
         console.log("--------internetNotConnectedAlarm------", result)
         let macAddressArray = [];
         let receiverIdArray = [];
-        const mappedArray =   result && result.length > 0 &&   _.map(result,'macAddress')
-        const mappedArray2 =   result && result.length > 0 &&   _.map(result,'receiverId')
+        const mappedArray = result && result.length > 0 && _.map(result, 'macAddress')
+        const mappedArray2 = result && result.length > 0 && _.map(result, 'receiverId')
         result && result.length > 0 && result.forEach(element => {
           macAddressArray.push(element.macAddress);
           receiverIdArray.push(element.receiverId);
         }
-        ); 
-       // const mappedArray = _.map(macAddressArray)
+        );
+        // const mappedArray = _.map(macAddressArray)
         const uniqueadta = macAddressArray && macAddressArray.length > 0 && _.uniq(macAddressArray)
         const uniqueReceiverId = receiverIdArray && receiverIdArray.length > 0 && _.uniq(receiverIdArray)
 
@@ -191,101 +195,28 @@ const pushFCMNotificationDetails = async (receiverIds, title, message) => {
     console.log("error : ", error);
   }
 };
- //-----------------Final Audit Auto Submission Job----------------------------
-
- //-----------------------End------------------------------------------------
 
 
+const updateTMCEndDateTime = async () => {
+  //
+  try {
 
- // /**
- //  * It will take the payment id, and capture it
- //  */
- // const capturePayment = async (id, amount) => {
- //   // when we capture a payment, we need to make sure that the status is rolled back to the DB
+    console.log("------Cron Job -- updateTMCEndDateTime------")
+    const promise = new Promise((resolve, reject) => {
 
- //   // if we an error in this method, let's just send an email
-
- //   // To-do, let's try to make it a multiple statement instead of one by one
- //   //
- //   const capturedResult = await razorPay.capture(id, amount);
-
- //   // once captured, let's store it in DB
- //   const promise = new Promise((resolve, reject) => {
- //     db.sequelize.query('call set_razory_pay_status(:razorPayId, :razorPayStatus, :capturedAt);', {
- //       replacements: { razorPayId: id, razorPayStatus: capturedResult.status, capturedAt: capturedResult.created_at },
- //     }).then((result) => {
- //       resolve(result);
- //     }).catch((error) => {
- //       reject(error);
- //     });
- //   });
-
- //   await promise;
- // };
-
-
- // /**
- //  * Capturing payment on Razor Pay
- //  */
-
- // const autoCaptureAll = async () => {
- //   try {
- //     //
- //     /**
- //          * let's do this:
- //          * We will run this job every 30 minutes to capture the payment.
- //          * This will be handy if a payment was not captured initially while completing the payment
- //          */
-
- //     const paymentTo = Number(new Date());
- //     const paymentFrom = Number(dateAdd(paymentTo, 'minute', -30));
-
- //     const payments = await razorPay.getPayments(paymentFrom, paymentTo);
-
- //     /** To-do: we should not hit DB multiple times, so we will collect all the ids and do only 3-4 requests */
-
-
- //     // let's loop through all the payments and find if there are any items to authorize.
-
- //     payments.forEach(async (payment) => {
- //       try {
- //         if (payment.status === 'authorized' && payment.entity === 'payment') {
- //           // ok, we need to capture it
- //           await capturePayment(payment.id, payment.amount);
- //         } else {
- //           const promise = new Promise((resolve, reject) => {
- //             db.sequelize.query('call set_razory_pay_status(:razorPayId, :razorPayStatus, :capturedAt);', {
- //               replacements: { razorPayId: payment.id, razorPayStatus: payment.status, capturedAt: new Date() },
- //             }).then((result) => {
- //               resolve(result);
- //             }).catch((error) => {
- //               reject(error);
- //             });
- //           });
-
- //           await promise;
- //         }
- //       } catch (error) {
- //         let description = `Error in Payment Job. Razor Pay Id: ${payment.Id}\n\n`;
- //         if (error.error) {
- //           description += error.error.description;
- //         } else {
- //           description += error.message;
- //         }
- //         const newError = new Error(description);
- //         logger.logError('Payment Capture Job', '', newError, true);
- //       }
- //     });
- //   } catch (error) {
- //     if (error.error) {
- //       const newError = new Error(error.error.description);
- //       logger.logError('Payment Capture Job', '', newError, true);
- //     } else {
- //       logger.logError('Payment Capture Job', '', error, true);
- //     }
- //   }
- // };
-
-
-
-
+      db.sequelize.query('call asp_nk_update_tmc_end_date_time_details(:p_TowerMonitoringDetailsId)', {
+        replacements: {
+          p_TowerMonitoringDetailsId: ''
+        }
+      }).then((result) => {
+        resolve(result);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+    await promise;
+  }
+  catch (error) {
+    console.log("error : ", error);
+  }
+};
