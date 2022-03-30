@@ -61,7 +61,8 @@ const sendMessageToTopic = async (topic, title, body) => {
 
 const sendMessageToDevice = async (tokens, title, body) => {
   try {
-    console.log('-------sendMessageToTopic-----------------',tokens);
+    console.log('-------sendMessageToDevice-----------------',tokens);
+    console.log('-----------sendMessageToDevice------------:', body);
     if (tokens) { 
       const payload = {
         notification: {
